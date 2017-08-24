@@ -5,6 +5,7 @@
 <jsp:useBean id="rdao" class="com.sist.dao.ReviewDAO" />
 <%
 	String no= request.getParameter("cafeno");
+	String pageno = request.getParameter("page");
 	List<ReviewVO> rlist = rdao.getCafeReview(Integer.parseInt(no),1);
 	
 	request.setAttribute("rlist", rlist);
@@ -17,7 +18,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="../css/cafe.css">
 </head>
-<body>
+<body>   
 	<table class="board-list">
 
 		<c:choose>

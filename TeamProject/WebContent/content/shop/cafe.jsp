@@ -54,8 +54,6 @@
 <script>
 	// BS3
 	$(function() {
-		$("select.it_option").addClass("form-control input-sm");
-		$("select.it_supply").addClass("form-control input-sm");
 		$('.alink').click(function() {
 			var pageno = $(this).text();
 
@@ -70,6 +68,9 @@
 				}
 			});			
 		});
+		$("select.it_option").addClass("form-control input-sm");
+		$("select.it_supply").addClass("form-control input-sm");
+		
 	});
 
 	// 재입고SMS 알림
