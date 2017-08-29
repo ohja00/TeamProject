@@ -5,7 +5,7 @@ import javax.sql.*; // DataSource
 import javax.naming.*; // Context 
 
 public class ReviewDAO {
-	private Connection conn;
+	/*private Connection conn;
 	private PreparedStatement ps;
 	private final String URL = "jdbc:oracle:thin:@localhost:1521:orcl";
 	private final String USERNAME = "scott";
@@ -16,7 +16,7 @@ public class ReviewDAO {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 		} catch (Exception ex) {
-			System.out.println("MovieDAO() : " + ex.getMessage());
+			System.out.println("ReviewDAO() : " + ex.getMessage());
 		}
 	}
 
@@ -30,9 +30,9 @@ public class ReviewDAO {
 			System.out.println("getConnection() : " + ex.getMessage());
 		}
 
-	}	
+	}	*/
 
-/*	private Connection conn;
+	private Connection conn;
 	private PreparedStatement ps;
 	 
 	public void getConnection() {
@@ -47,13 +47,13 @@ public class ReviewDAO {
 			ex.printStackTrace();
 			
 		}
-	}*/
+	}
 	public void disConnection() {
 		try {
 			if (ps!=null) ps.close();
 			if(conn != null) conn.close();
 		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
+			System.out.println("disConnection : "+ ex.getMessage());
 		}
 	}
 	public void insertReviewData(ReviewVO vo) {
@@ -62,7 +62,7 @@ public class ReviewDAO {
 			
 			String sql="INSERT INTO review "
 					+ "VALUES (rv_no_seq.NEXTVAL,?,SYSDATE,0,?,?)";
-			System.out.println("vo.getCafe_no() :" +vo.getCafe_no());
+			//System.out.println("vo.getCafe_no() :" +vo.getCafe_no());
 			ps = conn.prepareStatement(sql);
 			ps.setString(1, vo.getBoard_nt());
 			ps.setDouble(2, vo.getCafe_star());
@@ -88,9 +88,12 @@ public class ReviewDAO {
 					+ "FROM (SELECT review_no,board_nt,board_date,cafe_star,cafe_no,rownum as num "
 					+ "FROM (SELECT review_no,board_nt,board_date,cafe_star,cafe_no "
 					+ "FROM review "
-					+ "WHERE cafe_no=?)) "
-					+ "WHERE num BETWEEN "+start+" AND "+end;						
-							
+					+ "WHERE cafe_no=? "
+					+ "ORDER BY board_date DESC)) "
+					+ "WHERE num BETWEEN "+start+" AND "+end; 
+						
+			
+//			System.out.println("getCafeReview == cafeno : "+cafeno);
 			ps=conn.prepareStatement(sql);
 			ps.setInt(1, cafeno);
 			ResultSet rs = ps.executeQuery();
@@ -103,10 +106,14 @@ public class ReviewDAO {
 				vo.setBoard_nt(rs.getString(2));
 				vo.setBoard_date(rs.getDate(3).toString());
 				vo.setCafe_star(rs.getDouble(4));
+			//	System.out.println("getCafeReview : " + vo.getReview_no());
+			//	System.out.println("getCafeReview : " + vo.getBoard_nt());
+				
 				list.add(vo);
 			}
 		}catch(Exception ex) {
-			System.out.println(ex.getMessage());
+//			System.out.println(ex.getMessage());
+			ex.printStackTrace();
 		}finally {
 			disConnection();
 		}
@@ -132,6 +139,52 @@ public class ReviewDAO {
 			disConnection();
 		}
 		return total;
+	}
+	public double getAvgStar(int cafeno) {
+		double avg =0;
+
+		try {
+			getConnection();
+			String sql="SELECT ROUND(AVG(cafe_star),1) "
+					+ "FROM review "
+					+ "WHERE cafe_no=?";
+					
+			ps=conn.prepareStatement(sql);
+			ps.setInt(1, cafeno);
+			
+			ResultSet rs=ps.executeQuery();
+			rs.next();
+			avg=rs.getDouble(1);
+			
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+		}finally {
+			disConnection();
+		}
+		
+		return avg;
+	}
+	public void insertNewReview(ReviewVO vo) {
+
+		try {
+			getConnection();
+			String sql="INSERT INTO review "
+					+ "VALUES(rv_no_seq.NEXTVAL,?,SYSDATE,?,?,?)";
+			ps=conn.prepareStatement(sql);
+			ps.setString(1, vo.getBoard_nt());
+			ps.setInt(2, vo.getCustom_no());
+			ps.setDouble(3, vo.getCafe_star());
+			ps.setInt(4, vo.getCafe_no());
+			
+			ps.executeUpdate();
+		//	System.out.println("insertNewReview : OK");
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			ex.printStackTrace();
+		}finally {
+			disConnection();
+		}
+				
 	}
 }
 

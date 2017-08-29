@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:useBean id="cn" class="com.sist.controller.CafeController" />
+<%
+	cn.controller(request);
+	
+%>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -72,7 +78,7 @@ var g5_purl = "http://www.handium.co.kr/handium/shop/list.php?ca_id=10";
 <script src="../plugin/apms/js/jquery.infinitescroll.min.js"></script>
 </head>
 <body class="responsive is-pc">
-
+  
 	<div id="thema_wrapper" class="wrapper  ko">
 		<%
 			pageContext.include("header.jsp"); 
@@ -87,7 +93,7 @@ var g5_purl = "http://www.handium.co.kr/handium/shop/list.php?ca_id=10";
 
 			<div class="clearfix"></div>
 			<div class="main_center">
-				<jsp:include page="cafe.jsp"></jsp:include>
+				<jsp:include page="${main_jsp }"></jsp:include>
 			</div>
 
 			

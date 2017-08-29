@@ -65,7 +65,7 @@ public class ReplayDBCollect {
 			CafeManagerDAO dao= new CafeManagerDAO();
 			cnlist=dao.getAllCafeName();
 		//	for (String cn: cnlist) {
-				String cn="와랑와랑";
+				String cn="문토스트";
 				String json=naverFind(cn);
 				//System.out.println(json);
 				JSONParser jp=new JSONParser();
@@ -73,6 +73,7 @@ public class ReplayDBCollect {
 				JSONArray arr=(JSONArray)obj.get("items");
 			//	System.out.println(arr.toJSONString());
 				String data="";
+				System.out.println(cn);
 				for (int i =0; i< arr.size();i++) {
 					ReviewVO vo=new ReviewVO();
 					JSONObject j=(JSONObject)arr.get(i);
@@ -82,28 +83,29 @@ public class ReplayDBCollect {
 					desc = desc.replaceAll(cn,"");
 					
 				//	System.out.println(desc);
-					System.out.println(cn);
+					
 					double star=makeRandomstar();
 					vo.setBoard_nt(desc);
 					vo.setCafe_no(dao.getCafeNoByCafeName(cn));
 					vo.setCafe_star(star);
 					
 					rdao.insertReviewData(vo);
-					System.out.println("=======================");
+					//System.out.println("=======================");
 					
 				}
 				System.out.println("저장완료");
-			//}
+		//	}
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
 	public double makeRandomstar() {
-		double star = (Math.random() * (5-2+1))+2;
+		double star = (Math.random() * 4)+2;
+					// 0.0~0.99 * 4 = 0.0~3.96+ 2 =2.0~5 까지의 난수
 		if (star > 5) star =5;
-		//Math.round(star);
-		//star = ((int)(star*10))/10d;
-		System.out.println("Star : " + ((double)((int)(star*10)))/10);
+		Math.round(star);
+		star = ((int)(star*10))/10d;
+	//	System.out.println("Star : " + ((double)((int)(star*10)))/10);
 		
 		return star;
 	}

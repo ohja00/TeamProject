@@ -6,12 +6,10 @@ package com.sist.dao;
   * 
   */
 public class ProductVO {
-	private int pd_no;	//��ǰ��ȣ
-	private String pd_cg_id; //��ǰī�װ�
-	private String pd_name;	// ��ǰ��
-	private int pd_price;	// ��ǰ����
-	private String pd_info; // ��ǰ ������
-	private CafeVO cvo=new CafeVO();	//��ü���� 
+	private int pd_no;	
+	private String pd_nm;	
+	private int pd_price; 	
+	private CafeVO cvo=new CafeVO();
 	
 	public int getPd_no() {
 		return pd_no;
@@ -19,17 +17,11 @@ public class ProductVO {
 	public void setPd_no(int pd_no) {
 		this.pd_no = pd_no;
 	}
-	public String getPd_cg_id() {
-		return pd_cg_id;
+	public String getPd_nm() {
+		return pd_nm;
 	}
-	public void setPd_cg_id(String pd_cg_id) {
-		this.pd_cg_id = pd_cg_id;
-	}
-	public String getPd_name() {
-		return pd_name;
-	}
-	public void setPd_name(String pd_name) {
-		this.pd_name = pd_name;
+	public void setPd_nm(String pd_nm) {
+		this.pd_nm = pd_nm;
 	}
 	public int getPd_price() {
 		return pd_price;
@@ -37,13 +29,6 @@ public class ProductVO {
 	public void setPd_price(int pd_price) {
 		this.pd_price = pd_price;
 	}
-	public String getPd_info() {
-		return pd_info;
-	}
-	public void setPd_info(String pd_info) {
-		this.pd_info = pd_info;
-	}
-
 	public CafeVO getCvo() {
 		return cvo;
 	}
@@ -52,4 +37,6 @@ public class ProductVO {
 	}
 	
 	
+	
+
 }

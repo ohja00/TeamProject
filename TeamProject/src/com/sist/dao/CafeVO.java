@@ -16,17 +16,17 @@ public class CafeVO {
 	private float cafe_lat;		// 위도
 	private float cafe_lon;		// 경도
 	private String cafe_cg;		// 업체 카탈로그 ('c': 커피, 'd': 디저트, 'b': 빙수)
-	
+	private double cafe_star;	// 리뷰테이블에서 읽어서 평균낸 평점
 	public int getCafe_no() {
 		return cafe_no;
 	}
 	public void setCafe_no(int cafe_no) {
 		this.cafe_no = cafe_no;
 	}
-	public String getcafe_nm() {
+	public String getCafe_nm() {
 		return cafe_nm;
 	}
-	public void setcafe_nm(String cafe_nm) {
+	public void setCafe_nm(String cafe_nm) {
 		this.cafe_nm = cafe_nm;
 	}
 	public String getCafe_img() {
@@ -47,10 +47,10 @@ public class CafeVO {
 	public void setCafe_tel(String cafe_tel) {
 		this.cafe_tel = cafe_tel;
 	}
-	public Date getcafe_date() {
+	public Date getCafe_date() {
 		return cafe_date;
 	}
-	public void setcafe_date(Date cafe_date) {
+	public void setCafe_date(Date cafe_date) {
 		this.cafe_date = cafe_date;
 	}
 	public float getCafe_lat() {
@@ -71,6 +71,13 @@ public class CafeVO {
 	public void setCafe_cg(String cafe_cg) {
 		this.cafe_cg = cafe_cg;
 	}
+	public double getCafe_star() {
+		return cafe_star;
+	}
+	public void setCafe_star(double cafe_star) {
+		this.cafe_star = cafe_star;
+	}
 	
+
 	
 }

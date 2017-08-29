@@ -4,7 +4,7 @@
 
 /******* ¿øÆäÀÌÁö *******/
 html {/*overflow-y:scroll; height:100%;*/}
-body	{height:100%; margin:0; padding:0; font-family:Dotum, "µ¸¿ò"; font-size:12px; color:#4b4b4b;
+body	{height:100%; margin:0; padding:0; font-family:Dotum, "굴림"; font-size:14px; color:#4b4b4b;
 
 scrollbar-face-color:#ffffff;
 scrollbar-arrow-color:#9ba7be;
@@ -632,7 +632,6 @@ legend {padding:0px; margin:0px; color:#000; text-indent:-100000px; font-size:0p
 .tabMenu .goodMember p	{position:absolute; top:253px; right:30px; /*float:left; margin:18px 0 0 29px;*/ width:325px; color:#adadad; text-align:right; display:inline;}
 .tabMenu .goodMember p span	{color:#db6565;}
 
-/* ¸Þ´ºÆÇ */
 .listmenupan {width:980px; clear:both; position:relative; top:-24px; background:url('/image/restaurant/onepage/bookbg.gif') no-repeat 0 0; padding-top:24px; z-index:5;}
 
 .listmenupan .wrap {width:978px; float:left; position:relative; height:auto; border:#d4d6df 1px solid; background:url('/image/restaurant/onepage/menubookbg.png') repeat-y 233px 0; padding-top:43px; z-index:150;  }
@@ -651,8 +650,8 @@ legend {padding:0px; margin:0px; color:#000; text-indent:-100000px; font-size:0p
 .listmenupan .wrap .list_wrap .listL_wrap .listL a { text-decoration:none; color:#adadad; font-size:12px; letter-spacing:-1px; line-height:30px; margin-left:15px; }
 .listmenupan .wrap .list_wrap .listL_wrap .listL a.on {font-weight:bold; color:#6079a8; float:left;}
 .listmenupan .wrap .list_wrap .listL_wrap .listL .checked {width:19px; height:15px; float:left; position:absolute; top:12px; background:url('/image/restaurant/onepage/onepage_ic.png') no-repeat 0 -185px; margin-left:5px;}
-.listmenupan .wrap .list_wrap .listR_wrap {float:right; width:700px; z-index:10;}
-.listmenupan .wrap .list_wrap .listR_wrap .listR	{ float:right; position:relative; width:700px; border-bottom:1px solid #eeeeee; padding:10px 0;  }
+.listmenupan .wrap .list_wrap .listR_wrap {float:left; width:700px; z-index:10;}
+.listmenupan .wrap .list_wrap .listR_wrap .listR	{ float:left; position:relative; width:700px; border-bottom:1px solid #eeeeee; padding:10px 0;  }
 .listmenupan .wrap .list_wrap .listR_wrap .listR .menu	{ float:left; width:425px; margin:0 10px 0 0px; padding:0 0 0 30px; z-index:10; }
 .listmenupan .wrap .list_wrap .listR_wrap .listR .menu .mTitle	{width:425px; line-height:30px; display:inline-block; float:left; letter-spacing: text-overflow:ellipsis; white-space:nowrap; word-wrap:normal; overflow:hidden; }
 .listmenupan .wrap .list_wrap .listR_wrap .listR .menu .photo {width:16px; height:13px; display:inline-block; position:relative; top:2px; .top:-2px; .margin-right:3px; background:url('/image/restaurant/onepage/onepage_ic.png') no-repeat 0 -42px; cursor:pointer; }
@@ -664,10 +663,10 @@ legend {padding:0px; margin:0px; color:#000; text-indent:-100000px; font-size:0p
 .listmenupan .wrap .list_wrap .listR_wrap .listR .price	{float:left; left:473px; margin:4px 10px 0 0; width:70px; text-align:right; line-height:30px;}
 .listmenupan .wrap .list_wrap .listR_wrap .listR .pay	{float:left;  left:546px; width:20px; text-align:center; margin-top:12px; margin-left:20px;}
 .listmenupan .wrap .list_wrap .listR_wrap .listR .pay input	{width:13px; height:13px; vertical-align:middle;  margin-left:20px;}
-.listmenupan .wrap .list_wrap .listR_wrap .listR .quantity	{float:left; left:565px; padding:0 0 0 10px; width:65px; margin-top:8px; }
-.listmenupan .wrap .list_wrap .listR_wrap .listR .quantity input	{float:left; padding:1px 5px 0 5px; width:25px; height:16px; border:1px solid #e0e0e0; text-align:right; font:normal 12px/140% "Dotum"; color:#4b4b4b;}
-.listmenupan .wrap .list_wrap .listR_wrap .listR .quantity .up	{float:left; margin:0 0 0 2px; display:inline; border-bottom:1px solid #e0e0e0;}
-.listmenupan .wrap .list_wrap .listR_wrap .listR .quantity .down	{float:left; margin:0 0 0 2px; display:inline;}
+.listmenupan .wrap .list_wrap .listR_wrap .listR .quantity	{float:right; left:595px; padding:0 0 0 10px; width:65px; margin-top:8px; margin-right:60px; }
+.listmenupan .wrap .list_wrap .listR_wrap .listR .quantity input	{padding:1px 5px 0 5px; width:25px; height:16px; border:1px solid #e0e0e0; text-align:right; font:normal 12px/140% "Dotum"; color:#4b4b4b; vertical-align: middle;}
+.listmenupan .wrap .list_wrap .listR_wrap .listR .quantity .up	{position:absolute; top:11px; margin:0 0 0 5px; display:inline; border-bottom:1px solid #e0e0e0;}
+.listmenupan .wrap .list_wrap .listR_wrap .listR .quantity .down	{position:absolute; top: 30px; margin:0 0 0 5px; display:inline;}
 .listmenupan .wrap .list_wrap .listR_wrap .listR .good	{width:30px; float:left; position:absolute; left:640px; padding:0 0 0 10px; text-align:right; color:#db6565; margin-top:10px;}
 .listmenupan .wrap .list_wrap .listR_wrap .listR .good .ic { float:left; display:inline; margin-top:-2px; }
 .listmenupan .payNotice {float:right; margin:6px 10px 10px 0px; text-align:right; width:289px; height:15px; background:url(/image/restaurant/onepage/ic_notice.gif) no-repeat; padding:4px 0 0 23px; display:inline; font:normal 11px/130% "Dotum"; color: #adadad;}
@@ -675,35 +674,42 @@ legend {padding:0px; margin:0px; color:#000; text-indent:-100000px; font-size:0p
 .listmenupan .wrap .list_wrap .listR_wrap .speaker img {display:inline;}
 
 
-.calculator {width:934px; float:left; position:relative; border-left:#d4d6df 1px solid; border-right:#d4d6df 1px solid; border-bottom:#d4d6df 1px solid; padding:0 22px 22px 22px; z-index:10; }
+.calculator {width:978px; float:left; position:relative; border-left:#d4d6df 1px solid; border-right:#d4d6df 1px solid; border-bottom:#d4d6df 1px solid; padding:0 22px 22px 22px; z-index:10; }
 .calculator .calculatorBtn {width:107px; height:25px; position:absolute; top:22px; right:22px; background:url('/image/restaurant/onepage/calculatorBtn2.gif') no-repeat 0 0;}
 .calculator .title {width:934px; height:24px; border-bottom:#8a8a8a 2px solid; padding-top:27px; }
 .calculator .title .calculator_ic {width:15px; height:15px; background:url('/image/restaurant/onepage/onepage_ic.png') no-repeat -1px -22px; float:left; margin-right:5px;}
 .calculator .title .txt { float:left; font-size:14px; color:#000; font-weight:bold;}
 .calculator .tab {width:934px; height:35px; border-bottom:#eee 1px solid; line-height:35px; font-size:12px; font-weight:bold; color:#6b6d70; text-align:center; }
-.calculator .tab .t1 {margin-left:75px;}
-.calculator .tab .t2 {margin-left:590px;}
-.calculator .tab .t3 {margin-left:35px;}
-.calculator .tab .t4 {margin-left:33px;}
-.calculator .c_default { text-align:center; padding:30px 0;}
-.calculator ul {position:relative; float:left; width:934px; border-bottom:1px solid #8a8a8a; font-size:12px; color:#908f90; }
-.calculator ul .list {height:49px; border-bottom:#eee 1px solid;}
-.calculator ul .list .mTitle {width:280px; float:left; padding-left:20px; line-height:49px; color:#4b4b4b; text-overflow:ellipsis; white-space:nowrap; word-wrap:normal; overflow:hidden;}
+	.calculator .tab .t1 {margin-left:75px;}
+	.calculator .tab .t2 {margin-left:590px;}
+	.calculator .tab .t3 {margin-left:35px;}
+	.calculator .tab .t4 {margin-left:33px;}
+	.calculator .c_default { text-align:center; padding:30px 0;}
+	.calculator ul {position:relative; float:left; width:934px; border-bottom:1px solid #8a8a8a; font-size:12px; color:#908f90; }
+	.calculator ul .list {height:49px; border-bottom:#eee 1px solid;}
+	.calculator ul .list .mTitle {width:280px; float:left; padding-left:20px; line-height:49px; color:#4b4b4b; text-overflow:ellipsis; white-space:nowrap; word-wrap:normal; overflow:hidden;}
 .calculator ul .list .mDetail {width:420px; float:left; padding:0 10px; line-height:49px; color:#908f90; text-overflow:ellipsis; white-space:nowrap; word-wrap:normal; overflow:hidden;}
 .calculator ul .list .price	{float:left; margin:0 10px 0 0; width:70px; text-align:center; line-height:49px;}
 .calculator ul .list .quantity	{ float:left; margin:0 10px 0 0; width:20px; text-align:center; line-height:49px;}
 .calculator ul .list .t_price	{float:left; margin:0 10px 0 0; width:70px; text-align:center; line-height:49px;}
-.calculator .payPer {float:left; padding:13px 0 0 0; display:inline; width:932px; height:27px; background:#e5e9ea;}
+.calculator .payPer {float:left; padding:13px 0 0 0; display:inline; width:934px; height:38px; background:#e5e9ea;}
 .calculator .payPer dt {float:left; margin:0 10px 0 10px; display:inline;}
 .calculator .payPer .quantity {position:relative; top:-4px; left:0; float:left; display:inline; width:63px;}
 .calculator .payPer .quantity input {float:left; padding:1px 5px 0 5px; width:25px; height:16px; border:1px solid #e0e0e0; text-align:right; font:normal 12px/140% "Dotum"; color:#4b4b4b;}
-.calculator .payPer .quantity .up	{float:left; margin:0 0 0 2px; display:inline; border-bottom:1px solid #e0e0e0;}
-.calculator .payPer .quantity .down	{float:left; margin:0 0 0 2px; display:inline;}
+.calculator .payPer .quantity .up	{float:left; margin:0 0 0 2px; display:inline-block; border-bottom:1px solid #e0e0e0;}
+.calculator .payPer .quantity .down	{float:left; margin:0 0 0 2px; display:inline-block; z-index:22;}
 .calculator .payPer .result {float:left;}
 .calculator .payPer .result span {font-weight: bold;}
 .calculator .payPer .t_price {color:#d52828; font-weight:bold; float:right; margin-right:40px; text-align:center; }
 
-
+/* 추가
+*/
+.p1,.p2,.p3,.p4{display:inline-block; font-size: 14px; margin: 5px 0 5px 0}
+.p1 {margin-left:95px; width:500px;}
+.p2 {margin-left:160px; width:15px;}
+.p3 {margin-left:45px;}
+.p4 {margin-left:45px;}
+.checkmenu { width:700px; height:67px;}
 
 
 
@@ -1227,3 +1233,18 @@ legend {padding:0px; margin:0px; color:#000; text-indent:-100000px; font-size:0p
 .roadview_wrap .daumRoadview980 {width:980px; height:300px; float:left; position:relative;}
 .roadview_wrap .daumRoadview980 .btnZoom	{margin:7px 0 0 0; float:left; position:absolute; bottom:20px; right:20px; z-index:150;}
 .roadview_wrap .daumRoadview980 .noticeMap {float:left; position:absolute; left:0px; bottom:0px; margin:0px 0 0 0px; height:16px; background:#000 url('/image/restaurant/onepage/bullet_map.png') no-repeat 3px 3px; padding:3px 3px 0px 17px; display:inline; font:normal 11px/140% "Dotum"; color:#fff; z-index:150; letter-spacing:-1px; opacity:0.3; filter:alpha(opacity="35");}
+
+.item-form-footer{
+	position: relative;
+	margin : 80px 0 0 0;
+	width: 100%;
+	padding: 20px 15px 0 30px;
+	font-family: 'SpoqaHanSans-Regular';
+}
+.item_cart{
+	width: 30%;
+	height:70px;
+	margin-left: 5px;
+	margin-top : 10px;
+	display:inline-block;
+}

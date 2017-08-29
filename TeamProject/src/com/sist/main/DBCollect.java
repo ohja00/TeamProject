@@ -77,7 +77,7 @@ public class DBCollect {
 				CafeVO cvo=new CafeVO(); 
 				
 				String cname=items.get(1).attr("value");
-				if (cname!=null) cvo.setcafe_nm(cname);
+				if (cname!=null) cvo.setCafe_nm(cname);
 				//System.out.println("cafe name : "+cname);
 				//System.out.println("tel : " + tel.text()+" - Addr : " +address.get(2).text());
 				if (tel != null)
@@ -122,15 +122,15 @@ public class DBCollect {
 
 					for (int i = 0; i< cnt-1;i++) {
 						ProductVO vo =new ProductVO();
-						vo.setPd_name(arr1[i]);
+						vo.setPd_nm(arr1[i]);
 						try {
 							vo.setPd_price(Integer.parseInt(arr1[++i]));
 						}catch(Exception ex) { 
 							vo.setPd_price(0);
 						}
-						if(kind==1) vo.setPd_cg_id("d");
+					/*	if(kind==1) vo.setPd_cg_id("d");
 						else if(kind==2)vo.setPd_cg_id("c");
-						else if(kind==3)vo.setPd_cg_id("b");
+						else if(kind==3)vo.setPd_cg_id("b");*/
 						
 					//	System.out.println("cafe명"+cvo.getcafe_nm());						
 						vo.setCvo(cvo);

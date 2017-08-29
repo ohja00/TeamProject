@@ -2,28 +2,11 @@
 	pageEncoding="utf-8" import="com.sist.dao.*,java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<jsp:useBean id="dao" class="com.sist.dao.CafeManagerDAO"></jsp:useBean>
-<jsp:useBean id="rdao" class="com.sist.dao.ReviewDAO"></jsp:useBean>
+<jsp:useBean id="cn"  class="com.sist.controller.CafeController"/>
 <%
-	int no = dao.getCafeNoByCafeName("와랑와랑");
-
-	CafeVO cafevo = dao.getCafeInfoByCafeNo(no);
-	String[] arr = cafevo.getCafe_img().split(",");
-
-	int totalpage = rdao.getTotalPage(no);
-
-	request.setAttribute("totalpage", totalpage);
-	request.setAttribute("cafeno", no);
-	/*	
-		
-	
-		cn.controller(request);  */
+	cn.controller(request);  
 %>
-<c:set var="cvo" value="<%=cafevo%>" />
-<c:set var="img1" value="<%=arr[0]%>" />
-<c:set var="img2" value="<%=arr[1]%>" />
-<c:set var="img3" value="<%=arr[2]%>" />
-
+<c:set var="imgs" value='${ cvo.cafe_img.split(",")}'></c:set>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -52,8 +35,24 @@
 <link rel="stylesheet" href="../css/cafe.css">
 <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
 <script>
+	var winObj=null;
 	// BS3
-	$(function() {
+	$(function() {	
+		var no=$('#cafeno').attr("value");
+	
+		$.ajax({
+			type:'GET',
+			url:'cafe_review.jsp',
+			data:{"cafeno":no,"page":1,"mode":6},
+			
+			success:function(response){		
+				$('#cafe_review').html(response);
+			},
+			error:function(request,status,error){
+		        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		       }
+		});
+		
 		$('.alink').click(function() {
 			var pageno = $(this).text();
 
@@ -70,15 +69,25 @@
 		});
 		$("select.it_option").addClass("form-control input-sm");
 		$("select.it_supply").addClass("form-control input-sm");
-		
+		if (winObj!=null){
+			winObj.close();
+			winObj=null;
+		}
 	});
-
+	function review_write(){
+		var cno=$('#cafeno').val();
+		
+		var link="review_write.jsp?cafeno="+cno;
+		winObj= window.open(link,"리뷰쓰기", "width=500px, height:500px,menubar=no,scrollbar=no,resizable=yes,toolbar=no");
+		//winObj.document.getElementById("cafeno").value=cno;
+	}
+	
 	// 재입고SMS 알림
 	function popup_stocksms(it_id, ca_id) {
 		url = "./itemstocksms.php?it_id=" + it_id + "&ca_id=" + ca_id;
 		opt = "scrollbars=yes,width=616,height=420,top=10,left=10";
 		popup_window(url, "itemstocksms", opt);
-	}
+		}
 
 	// 바로구매, 장바구니 폼 전송
 	function fitem_submit(f) {
@@ -238,8 +247,8 @@
 							<div class="col-sm-5 col img-container">
 								<div id="sit_pvi">
 									<div id="sit_pvi_big">
-										<a href=${img1 } target="_blank"
-											class="popup_item_image visible"> <img src=${img1 }
+										<a href=${imgs[0] } target="_blank"
+											class="popup_item_image visible"> <img src=${imgs[0] }
 											style='width: 100%;'></a>
 									</div>
 								</div>
@@ -248,172 +257,25 @@
 								<div id="buy_form" class="text">
 									<div class="fs_buy_name">
 										<!-- 카테고리 값 넘겨오기 -->
-										<span style="font-size: 13px;" class="fs_item_name">업체상세
+										<span style="font-size: 14px;" class="fs_item_name">카페 소개
 										</span> <input type="hidden" id="cafeno" value="${cvo.cafe_no }">
 									</div>
-									<h1>${cvo.cafe_nm }</h1>
+									
 									<div class="price font-16 en fs_price">
 										<div class="pull-left">
-											<b class="fs_price">${cvo.cafe_tel }</b>
+											<b class="fs_price">${cvo.cafe_nm }</b>
 										</div>
 										<div class="clearfix"></div>
 									</div>
-
-									<form name="fitem" method="post" action="./cartupdate.php"
-										class="form" role="form" onsubmit="return fitem_submit(this);">
-										<input type="hidden" name="it_id[]" value="1490142602">
-										<input type="hidden" name="it_msg1[]" value=""> <input
-											type="hidden" name="it_msg2[]" value=""> <input
-											type="hidden" name="it_msg3[]" value=""> <input
-											type="hidden" name="sw_direct"> <input type="hidden"
-											name="url"> <input type="hidden" id="it_price"
-											value="19800">
-										<div id="item_option">
-											<table class="table option-tbl">
-												<tbody>
-													<tr>
-														<th><label for="it_option_1">맛</label></th>
-														<td><select id="it_option_1" class="it_option">
-																<option value="">선택</option>
-																<option value="케냐">케냐</option>
-														</select></td>
-													</tr>
-													<tr>
-														<th><label for="it_option_2">패키지</label></th>
-														<td><select id="it_option_2" class="it_option"
-															disabled="disabled">
-																<option value="">선택</option>
-																<option value="포함">포함</option>
-																<option value="미포함">미포함</option>
-														</select></td>
-													</tr>
-												</tbody>
-											</table>
-
-
-											<div id="it_sel_option"></div>
-											<!-- 총 구매액 -->
-											<div class="price-sum">
-												총 금액 <b><span id="it_tot_price" class="font-22 en"
-													style="color: #333; font-weight: 400;">0won</span></b>
-											</div>
-										</div>
-										<div class="item_linner"></div>
-										<!--2차 수정-->
-										<div class="item-form-footer text-center">
-											<ul class="item-form-btn">
-												<!-- <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" class="btn-block fs_btn fs_btn0"></li> 
-                                <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" class="btn-block fs_btn fs_btn1"></li> -->
-												<li><a href="order.jsp"><input type="button"
-														value="바로구매" class="btn-block fs_btn fs_btn0"></a></li>
-												<li><a href="cart.jsp"><input type="button"
-														value="장바구니" class="btn-block fs_btn fs_btn1"></a></li>
-												<li><input type="submit"
-													onclick="apms_wishlist('1490142602'); return false;"
-													value="WISH" class="btn-block fs_btn fs_btn2"></li>
-											</ul>
-											<div class="text-right" style="margin: 10px 0px;">
-												<script type="text/javascript">
-													//<![CDATA[
-													function buy_nc(url) {
-														var f = $(this)
-																.closest("form")
-																.get(0);
-
-														var check = fsubmit_check(f);
-														if (check) {
-															//네이버페이로 주문 정보를 등록하는 가맹점 페이지로 이동.
-															//해당 페이지에서 주문 정보 등록 후 네이버페이 주문서 페이지로 이동.
-															//location.href=url;
-
-															//var win_buy_nc = window.open("_blank", "win_buy_nc", "scrollbars=yes,width=900,height=700,top=10,left=10");
-															//f.action = "http://www.handium.co.kr/handium/shop/naverpay/naverpay_order.php";
-															//f.target = "win_buy_nc";
-															//f.submit();
-															//return false;
-
-															$
-																	.ajax({
-																		url : "http://www.handium.co.kr/handium/shop/naverpay/naverpay_order.php",
-																		type : "POST",
-																		data : $(
-																				f)
-																				.serialize(),
-																		async : false,
-																		cache : false,
-																		dataType : "json",
-																		success : function(
-																				data) {
-																			if (data.error) {
-																				alert(data.error);
-																				return false;
-																			}
-
-																			document.location.href = "https://pay.naver.com/customer/order.nhn?ORDER_ID="
-																					+ data.ORDER_ID
-																					+ "&SHOP_ID="
-																					+ data.SHOP_ID
-																					+ "&TOTAL_PRICE="
-																					+ data.TOTAL_PRICE;
-																		}
-																	});
-														}
-
-														return false;
-													}
-													function wishlist_nc(url) {
-														var f = $(this)
-																.closest("form")
-																.get(0);
-
-														// 네이버페이로 찜 정보를 등록하는 가맹점 페이지 팝업 창 생성.
-														// 해당 페이지에서 찜 정보 등록 후 네이버페이 찜 페이지로 이동.
-														var win_wishlist_nc = window
-																.open(
-																		url,
-																		"win_wishlist_nc",
-																		"scrollbars=yes,width=400,height=267");
-														f.target = "win_wishlist_nc";
-														f.action = "http://www.handium.co.kr/handium/shop/naverpay/naverpay_wish.php";
-														f.submit();
-
-														return false;
-													}
-													function not_buy_nc() {
-														alert("죄송합니다. 네이버페이로 구매가 불가한 상품입니다.");
-														return false;
-													}
-													//]]>
-												</script>
-												<script type="text/javascript"
-													src="https://pay.naver.com/customer/js/naverPayButton.js"
-													charset="UTF-8"></script>
-												<script type="text/javascript">
-													//<![CDATA[
-													naver.NaverPayButton
-															.apply({
-																BUTTON_KEY : "B5F8F9A8-8000-4736-8833-931552A575B3", // 페이에서 제공받은 버튼 인증 키 입력
-																TYPE : "A", // 버튼 모음 종류 설정
-																COLOR : 1, // 버튼 모음의 색 설정
-																COUNT : 2, // 버튼 개수 설정. 구매하기 버튼만 있으면 1, 찜하기 버튼도 있으면 2를 입력.
-																ENABLE : "Y", // 품절 등의 이유로 버튼 모음을 비활성화할 때에는 "N" 입력
-																BUY_BUTTON_HANDLER : buy_nc, // 구매하기 버튼 이벤트 Handler 함수 등록, 품절인 경우 not_buy_nc 함수 사용
-																WISHLIST_BUTTON_HANDLER : wishlist_nc, // 찜하기 버튼 이벤트 Handler 함수 등록
-																"" : ""
-															});
-													//]]>
-												</script>
-												<input type="hidden" name="naverpay_form" value="item.php">
-											</div>
-											<div class="clearfix"></div>
-										</div>
-										<div>
-											<ul id="it_opt_added" class="list-group">
-												<li></li>
-											</ul>
-										</div>
-									</form>
-
+									<h1>${cvo.cafe_tel }</h1>	
+									<h1>${cvo.cafe_addr	 }</h1>	
+									<h1>카페 평점 : ${star	 }</h1>	
+									<div class="item_linner"></div>
+									<!--2차 수정-->
+									
+									<div>
+										
+									</div>
 
 									<div class="clearfix"></div>
 								</div>
@@ -435,8 +297,23 @@
 											<center>
 												<h3>추천업체</h3>
 											</center>
+											</p>
 										</div>
-										<div class="recom_cafe">
+										<c:forEach var="vo" items="${recommand}" varStatus="0">
+										<c:set var="images" value='${ vo.cafe_img.split(",")}'></c:set>
+											<div class="recom_cafe">
+												<a href="cafe.jsp?cafeno=${vo.cafe_no }">
+												<img src=${images[0] } width=230px height=190px></a>
+												<div class="clearfix"></div>
+												<label>${vo.cafe_nm }</label>
+												<div class="clearfix"></div>
+												<label>${vo.cafe_star }</label>
+												<div class="clearfix"></div>
+												<label>${vo.cafe_addr }</label>
+												<div class="clearfix"></div>
+											</div>
+										</c:forEach>
+										<%-- <div class="recom_cafe">
 											<img src=${img2 } width=230px>
 											<div class="clearfix"></div>
 											<label>${cvo.cafe_nm }</label>
@@ -459,15 +336,7 @@
 											<div class="clearfix"></div>
 											<label>${cvo.cafe_tel }</label>
 											<div class="clearfix"></div>
-										</div>
-										<div class="recom_cafe">
-											<img src=${img2 } width=230px>
-											<div class="clearfix"></div>
-											<label>${cvo.cafe_nm }</label>
-											<div class="clearfix"></div>
-											<label>${cvo.cafe_tel }</label>
-											<div class="clearfix"></div>
-										</div>
+										</div> --%>
 
 									</div>
 									<div class="item-explan img-resize">
@@ -506,7 +375,7 @@
 										<button
 											style="background-color: #333; color: #fff; border: 1px solid #333;"
 											type="button" class="fs_btnHover btn btn-color btn-sm"
-											onclick="apms_form('itemuse_form', './itemuseform.php?it_id=1490142602&amp;ca_id=10&amp;urows=20');">
+											onclick="review_write();">
 											후기쓰기<span class="sound_only"> 새 창</span>
 										</button>
 										<a

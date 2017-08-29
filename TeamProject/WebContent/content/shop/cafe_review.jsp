@@ -3,12 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:useBean id="rdao" class="com.sist.dao.ReviewDAO" />
+<jsp:useBean id="cn" class="com.sist.controller.CafeController"/>
 <%
-	String no= request.getParameter("cafeno");
-	String pageno = request.getParameter("page");
-	List<ReviewVO> rlist = rdao.getCafeReview(Integer.parseInt(no),1);
-	
+String no= request.getParameter("cafeno");
+String pageno = request.getParameter("page");
+if (pageno==null) pageno="1";
+List<ReviewVO> rlist = rdao.getCafeReview(Integer.parseInt(no),Integer.parseInt(pageno));
+
 	request.setAttribute("rlist", rlist);
+	cn.controller(request);
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -20,7 +23,9 @@
 </head>
 <body>   
 	<table class="board-list">
-
+		<tr>
+			<td>¼º°ø</td>
+		</tr>
 		<c:choose>
 			<c:when test="${fn:length(rlist)==0}">
 				<tr>

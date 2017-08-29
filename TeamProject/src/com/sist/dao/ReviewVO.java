@@ -7,7 +7,15 @@ public class ReviewVO {
 	private int custom_no;
 	private double cafe_star;
 	private int cafe_no;
+	private String pwd;
+
 	
+	public String getPwd() {
+		return pwd;
+	}
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
 	public int getReview_no() {
 		return review_no;
 	}

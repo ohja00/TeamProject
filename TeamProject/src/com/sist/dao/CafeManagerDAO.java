@@ -41,7 +41,7 @@ public class CafeManagerDAO {
 					+ "VALUES(cafe_no_seq.NEXTVAL,?,?,?,?,SYSDATE,?,0,0)";
 		//	System.out.println("cafe_name : "+cvo.getcafe_nm());
 			ps = conn.prepareStatement(sql);
-			ps.setString(1,cvo.getcafe_nm());
+			ps.setString(1,cvo.getCafe_nm());
 			ps.setString(2,cvo.getCafe_img());
 			ps.setString(3,cvo.getCafe_addr());
 			ps.setString(4,cvo.getCafe_tel());
@@ -65,7 +65,7 @@ public class CafeManagerDAO {
 			
 			ps = conn.prepareStatement(sql);
 			//ps.setString(1, pvo.getPd_cg_id());
-			ps.setString(1,pvo.getPd_name());
+			ps.setString(1,pvo.getPd_nm());
 			ps.setInt(2, pvo.getPd_price());
 
 
@@ -80,8 +80,8 @@ public class CafeManagerDAO {
 	}
 	public void insertCafeProduct(ProductVO pvo) {
 		try {
-			int cafeno = getCafeNoByCafeName(pvo.getCvo().getcafe_nm());
-			int pdno =getPdNoByPdName(pvo.getPd_name());
+			int cafeno = getCafeNoByCafeName(pvo.getCvo().getCafe_nm());
+			int pdno =getPdNoByPdName(pvo.getPd_nm());
 		//	System.out.println("======cafeno : "+cafeno+"  pdno : "+pdno);
 			getConnection();
 	
@@ -116,11 +116,11 @@ public class CafeManagerDAO {
 			ResultSet rs = ps.executeQuery();
 			rs.next();
 			vo.setCafe_no(rs.getInt(1));
-			vo.setcafe_nm(rs.getString(2));
+			vo.setCafe_nm(rs.getString(2));
 			vo.setCafe_img(rs.getString(3));
 			vo.setCafe_addr(rs.getString(4));
 			vo.setCafe_tel(rs.getString(5));
-			System.out.println(vo.getcafe_nm());
+			System.out.println(vo.getCafe_nm());
 			
 			rs.close();
 			
@@ -146,7 +146,7 @@ public class CafeManagerDAO {
 			ResultSet rs = ps.executeQuery();
 			rs.next();
 			no=rs.getInt(1);
-			System.out.println("cafeno: " + no);
+		//	System.out.println("cafeno: " + no);
 		//+ "cafe_no_seq.NEXTVAL,cafe_nm,cafe_img,cafe_addr,cafe_tel,cafe_date,cafe_xplot,cafe_yplot)";
 			rs.close();
 		}catch(Exception ex) {
@@ -195,8 +195,8 @@ public class CafeManagerDAO {
 			while(rs.next()) {
 				ProductVO vo = new ProductVO();
 				vo.setPd_no(rs.getInt(1));
-				vo.setPd_name(rs.getString(2));
-				System.out.println("PDName : " +vo.getPd_name());
+				vo.setPd_nm(rs.getString(2));
+				//System.out.println("PDName : " +vo.getPd_nm());
 				vo.setPd_price(rs.getInt(3));
 				//System.out.println("제품명 : " +vo.getPd_name());
 				list.add(vo);
@@ -248,11 +248,11 @@ public class CafeManagerDAO {
 			while(rs.next()) {
 				CafeVO vo = new CafeVO();
 				vo.setCafe_no(rs.getInt(1));
-				vo.setcafe_nm(rs.getString(2));
+				vo.setCafe_nm(rs.getString(2));
 				vo.setCafe_img(rs.getString(3));
 				vo.setCafe_addr(rs.getString(4));
 				vo.setCafe_tel(rs.getString(5));
-				vo.setcafe_date(rs.getDate(6));
+				vo.setCafe_date(rs.getDate(6));
 				vo.setCafe_lat(rs.getFloat(7));
 				vo.setCafe_lon(rs.getFloat(8));
 				vo.setCafe_cg(rs.getString(9));
@@ -289,11 +289,11 @@ public class CafeManagerDAO {
 			while(rs.next()) {
 				CafeVO vo = new CafeVO();
 				vo.setCafe_no(rs.getInt(1));
-				vo.setcafe_nm(rs.getString(2));
+				vo.setCafe_nm(rs.getString(2));
 				vo.setCafe_img(rs.getString(3));
 				vo.setCafe_addr(rs.getString(4));
 				vo.setCafe_tel(rs.getString(5));
-				vo.setcafe_date(rs.getDate(6));
+				vo.setCafe_date(rs.getDate(6));
 				vo.setCafe_lat(rs.getFloat(7));
 				vo.setCafe_lon(rs.getFloat(8));
 				vo.setCafe_cg(rs.getString(9));
@@ -349,6 +349,66 @@ public class CafeManagerDAO {
 		}finally {
 			disConnection();
 		}		
+	}
+	public List<CafeVO> getRecommandCafe(String cafeAddr){
+		List<CafeVO> list= new ArrayList<CafeVO>();
+		
+		String addr = getSearchAddr(cafeAddr);
+		if (addr.equals("NORECOM")) return null;
+		try {
+			
+			getConnection();
+			String sql="SELECT cafe.cafe_no,cafe_nm,cafe_addr,cafe_tel,cafe_img,cs.star,rownum "
+					+"FROM cafe,(SELECT cafe_no,ROUND(AVG(cafe_star),1) star "
+					+"FROM review GROUP BY cafe_no) cs "
+					+"WHERE cafe.cafe_no=cs.cafe_no "
+					+"AND cafe_addr LIKE '%'||?||'%' "
+					+ "AND cafe_addr != ? "
+					+ "AND rownum < 5 "
+					+"ORDER BY cs.star desc";
+			
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, addr);
+			ps.setString(2, cafeAddr);
+			
+			ResultSet rs=ps.executeQuery();
+			while(rs.next()) {
+				CafeVO vo =new CafeVO();
+				vo.setCafe_no(rs.getInt(1));				
+				vo.setCafe_nm(rs.getString(2));
+				vo.setCafe_addr(rs.getString(3));
+				vo.setCafe_tel(rs.getString(4));
+				vo.setCafe_img(rs.getString(5));
+				vo.setCafe_star(rs.getDouble(6));
+				list.add(vo);
+				
+				
+			}
+			rs.close();
+			
+		}catch(Exception ex) {
+		//	System.out.println("SetGeo(): "+ex.getMessage());
+			ex.printStackTrace();
+		}finally {
+			disConnection();
+		}	
+		return list;
+	}
+	private String getSearchAddr(String addr) {
+		String[] result = addr.split(" ");
+
+		int i = 0;
+		for (String a: result) {
+		
+			if (a.lastIndexOf("구") > -1 || a.lastIndexOf("읍") > -1 || a.lastIndexOf("동") > -1) break;
+			
+			i++;
+		}
+		if (i >= result.length) {
+			return "NORECOM";
+		}
+		System.out.println("result " + result[i]);
+		return result[i];
 	}
 }
 

@@ -13,12 +13,12 @@
 }
 
 .at-menu .nav-height {
-	height: 44px;
+	height: 90px;
 	line-height: 44px !important;
 }
 
 .pc-menu, .pc-menu .nav-full-back, .pc-menu .nav-full-height {
-	height: 44px;
+	height: 90px;
 }
 
 .pc-menu .nav-top.nav-float .menu-a, .pc-menu .nav-mega .menu-a {

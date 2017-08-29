@@ -208,7 +208,7 @@
 }
 
 #right_form {
-	height: 427px
+	height: 350px
 }
 
 .at-body .at-container {
@@ -216,11 +216,11 @@
 }
 
 .text-center {
-	position: absolute;
+	position: relative;
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	padding: 20px 15px 0 30px;
+	padding: 0px 15px 0 00px;
 	font-family: 'SpoqaHanSans-Regular';
 } /*2차 수정*/
 .item_linner {
